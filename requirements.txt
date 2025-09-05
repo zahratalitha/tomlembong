@@ -1,7 +1,4 @@
 streamlit
-tensorflow
 transformers
 torch
 huggingface_hub
-numpy
-pandas
