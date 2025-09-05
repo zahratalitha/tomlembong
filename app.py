@@ -1,5 +1,7 @@
 import streamlit as st
-from transformers import pipeline
+from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
+from huggingface_hub import hf_hub_download
+import os
 
 st.set_page_config(page_title="Analisis Sentimen", page_icon="🧠")
 st.title("🧠 Analisis Sentimen Komentar Kasus Tom Lembong")
