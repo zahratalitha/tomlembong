@@ -1,7 +1,6 @@
 import streamlit as st
 from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
 from huggingface_hub import hf_hub_download
-import os
 
 st.set_page_config(page_title="Analisis Sentimen", page_icon="🧠")
 st.title("🧠 Analisis Sentimen Komentar Kasus Tom Lembong")
@@ -20,18 +19,13 @@ id2label = {
 
 @st.cache_resource
 def load_model():
-    # Download file model & tokenizer langsung dari Hugging Face
-    model_path = hf_hub_download(repo_id=REPO_ID, filename="model.safetensors")
-    config_path = hf_hub_download(repo_id=REPO_ID, filename="config.json")
-    tokenizer_path = hf_hub_download(repo_id=REPO_ID, filename="tokenizer.json")
-
-    # Load model dan tokenizer dari local cache HF
+    # Load model & tokenizer langsung dari Hugging Face (cache otomatis)
     tokenizer = AutoTokenizer.from_pretrained(REPO_ID)
     model = AutoModelForSequenceClassification.from_pretrained(REPO_ID)
-
     return pipeline("text-classification", model=model, tokenizer=tokenizer, return_all_scores=False)
 
 nlp = load_model()
+
 # Input user
 user_text = st.text_area("Masukkan teks komentar:", height=150)
 
