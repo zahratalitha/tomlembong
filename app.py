@@ -20,15 +20,18 @@ id2label = {
 
 @st.cache_resource
 def load_model():
-    return pipeline(
-        "text-classification",
-        model=REPO_ID,
-        tokenizer=REPO_ID,
-        return_all_scores=False
-    )
+    # Download file model & tokenizer langsung dari Hugging Face
+    model_path = hf_hub_download(repo_id=REPO_ID, filename="model.safetensors")
+    config_path = hf_hub_download(repo_id=REPO_ID, filename="config.json")
+    tokenizer_path = hf_hub_download(repo_id=REPO_ID, filename="tokenizer.json")
+
+    # Load model dan tokenizer dari local cache HF
+    tokenizer = AutoTokenizer.from_pretrained(REPO_ID)
+    model = AutoModelForSequenceClassification.from_pretrained(REPO_ID)
+
+    return pipeline("text-classification", model=model, tokenizer=tokenizer, return_all_scores=False)
 
 nlp = load_model()
-
 # Input user
 user_text = st.text_area("Masukkan teks komentar:", height=150)
 
