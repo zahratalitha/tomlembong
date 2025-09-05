@@ -1,4 +1,6 @@
 streamlit
-transformers=
-torch
-safetensors
+tensorflow
+transformers
+huggingface_hub
+numpy
+pandas
