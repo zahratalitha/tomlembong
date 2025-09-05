@@ -19,11 +19,18 @@ id2label = {
 
 @st.cache_resource
 def load_model():
-    # Load model & tokenizer langsung dari Hugging Face (cache otomatis)
+    # Download file model & tokenizer langsung dari Hugging Face
+    hf_hub_download(repo_id=REPO_ID, filename="model.safetensors")
+    hf_hub_download(repo_id=REPO_ID, filename="config.json")
+    hf_hub_download(repo_id=REPO_ID, filename="tokenizer.json")
+
+    # Load model dan tokenizer dari repo
     tokenizer = AutoTokenizer.from_pretrained(REPO_ID)
     model = AutoModelForSequenceClassification.from_pretrained(REPO_ID)
+
     return pipeline("text-classification", model=model, tokenizer=tokenizer, return_all_scores=False)
 
+# Load pipeline
 nlp = load_model()
 
 # Input user
